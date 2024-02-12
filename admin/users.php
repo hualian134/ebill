@@ -81,7 +81,7 @@
                                                 <!-- <p>Do it today or forever hold your speech!</p> -->
                                             </div>
                                             <div class="modal-footer">
-                        
+                                                <form>
                                                     <button type="button" class="btn btn-danger" data-dismiss="modal">NO</button>
                                                     <a  class='btn btn-success' href="delete_user.php?id=<?= $row['id']?>"> YES</a>
                                                 </form>

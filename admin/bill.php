@@ -49,7 +49,7 @@
                                             <tr>
                                                 <th>Bill No.</th>
                                                 <th>Customer</th>
-                                                <th>Meter Number</th>
+                                                <th>Meter ID</th>
                                                 <th>Date</th>
                                                 <th>UNITS Consumed</th>
                                                 <th>Amount</th>
@@ -79,13 +79,21 @@
                                                     <td><?php echo $row['ddate'] ?></td>
                                                     <td><?php if($row['status'] == 'PENDING') { echo'<span class="badge" style="background: red;">'.$row["status"].'</span>'; } else { echo'<span class="badge" style="background: green;">'.$row["status"].'</span>';} ?></td>
                                                 </tr>
+
                                             <?php 
                                             }
+                                            
+                        
                                             ?>
+                                              
+                                         
                                         </tbody>
                                     </table>
                                    
-                                    <?php include("paging2.php");  ?>
+                                            
+                                   
+                                    <?php include("paging2.php");?>
+                                    
                                 </div>
                                 <!-- .table-responsive -->
                             </div>
@@ -119,24 +127,20 @@
                             </div> 
 
                         </div>
-                        
+                      
                         <!-- /.tab-content -->
                     </div>
                    
+               
                     <!-- /.col-lg-12 -->
                 </div>
                 <!-- /.row -->
+                
             </div>
             <!-- /.container-fluid -->
-            <?php $rate="SELECT * from unitsrate";
-                                             $unitR = mysqli_query($con,$rate);
-                                             $rater=mysqli_fetch_assoc($unitR);
-                                             ?>
-                                             <table>
-                                                <tr>Cosume unit is less than 200,rate per unit = <?= $rater['rate']?> Ks</tr>
+            
+                                               
                                                 
-                                             </table>
-
         </div>
         <!-- /#page-content-wrapper -->
 

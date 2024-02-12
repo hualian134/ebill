@@ -142,6 +142,7 @@
                         $row2 = mysqli_fetch_row($result2);
                         $row3 = mysqli_fetch_row($result3);
                      ?>
+                     
                      <div class="col-lg-3 col-xs-6"></div>
                     <div class="col-lg-3 col-xs-6">
                         <div class="panel panel-bolt">
@@ -176,11 +177,70 @@
                             
                         </div>
                     </div><!-- ./panel-closes -->
+
+                   
+                    <div class="col-lg-4 col-xs-6"></div>
+                </div>
+
+                <div class='row'>
+                <?php 
+                    $rate="SELECT * from unitsrate";
+                    $unitR = mysqli_query($con,$rate);
+                    $rateR=mysqli_fetch_assoc($unitR);
+                ?>
+                <div class="col-lg-4 col-xs-6"></div>
+             <div class="col-lg-4 col-xs-6">
+                        <div class="panel panel-bolt2">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-calculator fa-3x"></i>
+                                    </div>
+                                    <div class="col-md-9 text-right">
+                                        
+                                        <div>One unit=<?= $rateR['rate']?> Ks</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" data-toggle="modal" data-target="#rate">
+                                <div class="panel-footer">
+                                    <span class="pull-left"><b>Update Unit rate</b></span>
+                                    <span class="pull-right"><i class="fa fa-edit fa-2x"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div> <!-- ./panel-closes -->
+                            </div>
+                                
+                        </div>
+                    </div>
                     <div class="col-lg-3 col-xs-6"></div>
                 </div>
 
                 
-
+                <!-- Update rate-->
+                <div class="modal fade" id="rate" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                <h3 class="modal-title"><b>Update rate</b></h3>
+                                            </div>
+                                            <form action="update_rate.php" method="post"> 
+                                            <div class="modal-body text-center">
+                                                <label for="update_rate">Update rate per unit</label>
+                                                <input type="number" name='unitrate' min="20" max="200" required>
+                                            </div>
+                                            <div class="modal-footer">
+                                                                                              
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancle</button>
+                                                    <button type="submit" id="rate_change" name="rate_change" class="btn btn-success ">Update</button>
+                                                </form> 
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
                  <!-- New Modal FOR DISHING OUT DUES-->
                                 <div class="modal fade" id="late" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-sm">

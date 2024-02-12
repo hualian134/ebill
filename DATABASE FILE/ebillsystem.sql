@@ -1,57 +1,227 @@
--- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+CREATE DATABASE  IF NOT EXISTS `ebillingsystem` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+USE `ebillingsystem`;
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 10, 2021 at 07:33 PM
--- Server version: 5.6.21
--- PHP Version: 5.6.3
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
+-- Host: localhost    Database: ebillsystem
+-- ------------------------------------------------------
+-- Server version	5.5.5-10.4.32-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Database: `ebillsystem`
+-- Table structure for table `admin`
 --
 
-DELIMITER $$
+DROP TABLE IF EXISTS `admin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `admin` (
+  `id` int(14) NOT NULL AUTO_INCREMENT,
+  `name` varchar(40) NOT NULL,
+  `email` varchar(40) NOT NULL,
+  `pass` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 --
--- Procedures
+-- Dumping data for table `admin`
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `unitstoamount` (IN `units` INT(14), OUT `result` INT(14))  BEGIN
+
+LOCK TABLES `admin` WRITE;
+/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+INSERT INTO `admin` VALUES (1,'Admin1','admin@gmail.com','Password'),(2,'Admin2','admin2@gmail.com','admin2');
+/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bill`
+--
+
+DROP TABLE IF EXISTS `bill`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `bill` (
+  `id` int(14) NOT NULL AUTO_INCREMENT,
+  `aid` int(14) NOT NULL,
+  `uid` int(14) NOT NULL,
+  `units` int(10) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `bdate` date NOT NULL,
+  `ddate` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `aid` (`aid`),
+  KEY `uid` (`uid`),
+  CONSTRAINT `bill_ibfk_1` FOREIGN KEY (`aid`) REFERENCES `admin` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `bill_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bill`
+--
+
+LOCK TABLES `bill` WRITE;
+/*!40000 ALTER TABLE `bill` DISABLE KEYS */;
+INSERT INTO `bill` VALUES (35,1,19,123,2460.00,'PROCESSED','2024-02-11','2024-03-12'),(36,1,20,400,14000.00,'PROCESSED','2024-02-07','2024-02-10'),(37,1,20,490,18500.00,'PENDING','2024-12-09','2024-02-09'),(38,1,20,123,0.00,'PENDING','2024-02-11','2024-03-12'),(39,1,21,123,2460.00,'PENDING','2023-11-11','2023-12-12'),(40,1,19,600,12000.00,'PENDING','2024-02-12','2024-03-13'),(41,1,20,1,50.00,'PENDING','2024-02-12','2024-03-13'),(42,1,21,111,5550.00,'PENDING','2024-02-12','2024-03-13');
+/*!40000 ALTER TABLE `bill` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `complaint`
+--
+
+DROP TABLE IF EXISTS `complaint`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `complaint` (
+  `id` int(14) NOT NULL AUTO_INCREMENT,
+  `uid` int(14) NOT NULL,
+  `aid` int(14) NOT NULL,
+  `complaint` varchar(140) NOT NULL,
+  `status` varchar(40) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `aid` (`aid`),
+  KEY `uid` (`uid`),
+  CONSTRAINT `complaint_ibfk_1` FOREIGN KEY (`aid`) REFERENCES `admin` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `complaint_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `complaint`
+--
+
+LOCK TABLES `complaint` WRITE;
+/*!40000 ALTER TABLE `complaint` DISABLE KEYS */;
+INSERT INTO `complaint` VALUES (15,19,2,'Bill Generated Late','NOT PROCESSED'),(16,20,1,'Previous Complaint Not Processed','NOT PROCESSED');
+/*!40000 ALTER TABLE `complaint` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `transaction`
+--
+
+DROP TABLE IF EXISTS `transaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `transaction` (
+  `id` int(14) NOT NULL AUTO_INCREMENT,
+  `bid` int(14) NOT NULL,
+  `payable` decimal(10,2) NOT NULL,
+  `pdate` date DEFAULT NULL,
+  `status` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `bid` (`bid`),
+  CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`bid`) REFERENCES `bill` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `transaction`
+--
+
+LOCK TABLES `transaction` WRITE;
+/*!40000 ALTER TABLE `transaction` DISABLE KEYS */;
+INSERT INTO `transaction` VALUES (35,35,2460.00,'2024-02-11','PROCESSED'),(36,36,14165.00,'2024-02-11','PROCESSED'),(37,37,18500.00,NULL,'PENDING'),(38,38,0.00,NULL,'PENDING'),(39,39,2460.00,NULL,'PENDING'),(40,40,12000.00,NULL,'PENDING'),(41,41,50.00,NULL,'PENDING'),(42,42,5550.00,NULL,'PENDING');
+/*!40000 ALTER TABLE `transaction` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `unitsrate`
+--
+
+DROP TABLE IF EXISTS `unitsrate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `unitsrate` (
+  `sno` int(1) NOT NULL,
+  `rate` int(10) NOT NULL,
+  PRIMARY KEY (`sno`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `unitsrate`
+--
+
+LOCK TABLES `unitsrate` WRITE;
+/*!40000 ALTER TABLE `unitsrate` DISABLE KEYS */;
+INSERT INTO `unitsrate` VALUES (1,50);
+/*!40000 ALTER TABLE `unitsrate` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user` (
+  `id` int(14) NOT NULL AUTO_INCREMENT,
+  `name` varchar(40) NOT NULL,
+  `email` varchar(40) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `pass` varchar(20) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (19,'Zaw Khant Win','zawkhantwin134@gmail.com','09677034331','1342004','UCSM'),(20,'Test','test@gmail.com','09454942634','test','UCSM'),(21,'Test','test1@gmail.com','09400478331','aa','UCSM');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
+-- Dumping events for database 'ebillsystem'
+--
+-- STORED PROCEDURE TO MULTIPLY UNITS * RATE TO GET AMOUNT
+
+delimiter //
+DROP PROCEDURE IF EXISTS `unitstoamount`;
+
+CREATE PROCEDURE unitstoamount( IN units INT(14) , OUT result INT(14))
+BEGIN
    
     DECLARE a INT(14) DEFAULT 0;
-    DECLARE b INT(14) DEFAULT 0;
-    DECLARE c INT(14) DEFAULT 0;
+    
 
-    SELECT twohundred FROM unitsRate INTO a ;
-    SELECT fivehundred FROM unitsRate INTO b ;
-    SELECT thousand FROM unitsRate INTO c  ;
+    SELECT rate FROM unitsRate INTO a ;
+    
 
-    IF units<200
-    then
         SELECT a*units INTO result;
     
-    ELSEIF units<500
-    then
-        SELECT (a*200)+(b*(units-200)) INTO result;
-    ELSEIF units > 500
-    then
-        SELECT (a*200)+(b*(300))+(c*(units-500)) INTO result;
-    END IF;
 
-END$$
+END
+//
+delimiter ;
+-- CALL UNITSTOAMOUNT BY : CALL unitstoamount(700,@x)// 
 
---
--- Functions
---
-CREATE DEFINER=`root`@`localhost` FUNCTION `curdate1` () RETURNS INT(11) BEGIN
+-- FUNCTION TO GET CURRENT DATE(1ST OF MONTH)
+
+delimiter //
+DROP FUNCTION IF EXISTS `curdate1`;
+CREATE FUNCTION curdate1()
+returns int
+BEGIN
     DECLARE x INT;
     SET x = DAYOFMONTH(CURDATE());
     IF (x=1)
@@ -60,267 +230,23 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `curdate1` () RETURNS INT(11) BEGIN
     ELSE
         RETURN 0;
     END IF;
-END$$
+END
+//
+delimiter ;
 
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `admin`
---
-
-CREATE TABLE `admin` (
-  `id` int(14) NOT NULL,
-  `name` varchar(40) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `pass` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `admin`
---
-
-INSERT INTO `admin` (`id`, `name`, `email`, `pass`) VALUES
-(1, 'Administrator One', 'admin@gmail.com', 'Password@123'),
-(2, 'Administrator Two', 'admin2@gmail.com', 'admin2');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bill`
---
-
-CREATE TABLE `bill` (
-  `id` int(14) NOT NULL,
-  `aid` int(14) NOT NULL,
-  `uid` int(14) NOT NULL,
-  `units` int(10) NOT NULL,
-  `amount` decimal(10,2) NOT NULL,
-  `status` varchar(10) NOT NULL,
-  `bdate` date NOT NULL,
-  `ddate` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `bill`
---
-
-INSERT INTO `bill` (`id`, `aid`, `uid`, `units`, `amount`, `status`, `bdate`, `ddate`) VALUES
-(17, 1, 8, 210, '450.00', 'PROCESSED', '2021-07-06', '2021-08-05'),
-(18, 1, 1, 61, '122.00', 'PROCESSED', '2021-07-10', '2021-08-09'),
-(19, 1, 2, 78, '156.00', 'PENDING', '2021-07-10', '2021-08-09'),
-(20, 1, 3, 70, '140.00', 'PROCESSED', '2021-07-10', '2021-08-09'),
-(21, 1, 4, 98, '196.00', 'PENDING', '2021-07-10', '2021-08-09'),
-(22, 1, 9, 55, '110.00', 'PROCESSED', '2021-07-10', '2021-08-09'),
-(23, 1, 11, 89, '178.00', 'PROCESSED', '2021-07-10', '2021-08-09'),
-(24, 1, 7, 103, '206.00', 'PENDING', '2021-07-10', '2021-08-09');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `complaint`
---
-
-CREATE TABLE `complaint` (
-  `id` int(14) NOT NULL,
-  `uid` int(14) NOT NULL,
-  `aid` int(14) NOT NULL,
-  `complaint` varchar(140) NOT NULL,
-  `status` varchar(40) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `complaint`
---
-
-INSERT INTO `complaint` (`id`, `uid`, `aid`, `complaint`, `status`) VALUES
-(1, 1, 1, 'Transaction Not Processed', 'PROCESSED'),
-(2, 1, 1, 'Transaction Not Processed', 'PROCESSED'),
-(3, 2, 1, 'Previous Complaint Not Processed', 'PROCESSED'),
-(4, 2, 1, 'Transaction Not Processed', 'PROCESSED'),
-(5, 2, 2, 'Transaction Not Processed', 'PROCESSED'),
-(6, 1, 1, 'Bill Not Correct', 'PROCESSED'),
-(7, 3, 1, 'Bill Not Correct', 'PROCESSED'),
-(8, 3, 2, 'Transaction Not Processed', 'PROCESSED'),
-(9, 4, 2, 'Transaction Not Processed', 'PROCESSED'),
-(10, 4, 1, 'Bill Not Correct', 'PROCESSED'),
-(11, 5, 2, 'Bill Generated Late', 'PROCESSED'),
-(12, 1, 2, 'Bill Generated Late', 'NOT PROCESSED'),
-(13, 11, 1, 'Bill Generated Late', 'PROCESSED');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `transaction`
---
-
-CREATE TABLE `transaction` (
-  `id` int(14) NOT NULL,
-  `bid` int(14) NOT NULL,
-  `payable` decimal(10,2) NOT NULL,
-  `pdate` date DEFAULT NULL,
-  `status` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `transaction`
---
-
-INSERT INTO `transaction` (`id`, `bid`, `payable`, `pdate`, `status`) VALUES
-(17, 17, '450.00', '2021-07-06', 'PROCESSED'),
-(18, 18, '122.00', '2021-07-10', 'PROCESSED'),
-(19, 19, '156.00', NULL, 'PENDING'),
-(20, 20, '140.00', '2021-07-10', 'PROCESSED'),
-(21, 21, '196.00', NULL, 'PENDING'),
-(22, 22, '110.00', '2021-07-10', 'PROCESSED'),
-(23, 23, '178.00', '2021-07-10', 'PROCESSED'),
-(24, 24, '206.00', NULL, 'PENDING');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `unitsrate`
---
-
-CREATE TABLE `unitsrate` (
-  `sno` int(1) DEFAULT NULL,
-  `twohundred` int(14) NOT NULL,
-  `fivehundred` int(14) NOT NULL,
-  `thousand` int(14) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `unitsrate`
---
-
-INSERT INTO `unitsrate` (`sno`, `twohundred`, `fivehundred`, `thousand`) VALUES
-(1, 2, 5, 10);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user`
---
-
-CREATE TABLE `user` (
-  `id` int(14) NOT NULL,
-  `name` varchar(40) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `phone` varchar(255) NOT NULL,
-  `pass` varchar(20) NOT NULL,
-  `address` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`id`, `name`, `email`, `phone`, `pass`, `address`) VALUES
-(1, 'Frederick J Baker\n', 'baker@gmail.com', '7450002145', 'password', '1488 Franklin Street'),
-(2, 'Antonio Dominguez', 'antonio@gmail.com', '7854547855', 'password', '3961 Sycamore Lake Road'),
-(3, 'Etta H Abner', 'etta@gmail.com', '7012569980', 'password', '3255 Ocello Street'),
-(4, 'Jeffrey Wegman', 'wegman@gmail.com', '7012458888', 'password', '2962 Pine Tree Lane'),
-(5, 'Benjamin Sanderson', 'benjamin@gmail.com', '7012565800', 'password', '4830 Bell Street'),
-(6, 'Eric Webb', 'ericw@gmail.com', '7896541000', 'password', '3485 Stewart Street'),
-(7, 'Jonathan Lasalle', 'jonathan@gmail.com', '70145850025', 'password', '3850 Olen Thomas Drive'),
-(8, 'Liam Moore', 'liamoore@gmail.com', '7012545555', 'password', '744 Ralph Street'),
-(9, 'Will Williams', 'williams@gmail.com', '7696969855', 'password', '7855 Allace Avenue'),
-(10, 'Christine Moore', 'moore@gmail.com', '7896500010', 'password', '1458 Bleckstreet'),
-(11, 'Timothy Diaz', 'timothy@gmail.com', '7412580020', 'password', '4840 Oakdale Avenue');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `bill`
---
-ALTER TABLE `bill`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `aid` (`aid`),
-  ADD KEY `uid` (`uid`);
-
---
--- Indexes for table `complaint`
---
-ALTER TABLE `complaint`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `aid` (`aid`),
-  ADD KEY `uid` (`uid`);
-
---
--- Indexes for table `transaction`
---
-ALTER TABLE `transaction`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `bid` (`bid`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `admin`
---
-ALTER TABLE `admin`
-  MODIFY `id` int(14) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `bill`
---
-ALTER TABLE `bill`
-  MODIFY `id` int(14) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
---
--- AUTO_INCREMENT for table `complaint`
---
-ALTER TABLE `complaint`
-  MODIFY `id` int(14) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
---
--- AUTO_INCREMENT for table `transaction`
---
-ALTER TABLE `transaction`
-  MODIFY `id` int(14) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(14) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `bill`
---
-ALTER TABLE `bill`
-  ADD CONSTRAINT `bill_ibfk_1` FOREIGN KEY (`aid`) REFERENCES `admin` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `bill_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `complaint`
---
-ALTER TABLE `complaint`
-  ADD CONSTRAINT `complaint_ibfk_1` FOREIGN KEY (`aid`) REFERENCES `admin` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `complaint_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `transaction`
---
-ALTER TABLE `transaction`
-  ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`bid`) REFERENCES `bill` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2024-02-12 15:20:30
