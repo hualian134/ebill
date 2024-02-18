@@ -19,9 +19,10 @@
         return $result;
     }
 
+
     function retrieve_bills_due($id,$offset, $rowsperpage) {
         global $con;
-        $query  = "SELECT bill.bdate AS bdate, bill.units AS units, bill.ddate AS ddate, transaction.payable AS payable, ";
+        $query  = "SELECT bill.bdate AS bdate,current_unit,previous_unit, bill.units AS units, bill.ddate AS ddate, transaction.payable AS payable, ";
         $query .= " bill.amount AS amount ,transaction.payable-bill.amount AS dues , bill.id AS id ";
         $query .= "FROM bill , transaction ";
         $query .= "WHERE transaction.bid=bill.id AND bill.uid={$id} AND bill.status='PENDING' ";
@@ -32,10 +33,10 @@
     }
     function retrieve_transaction_history($id,$offset, $rowsperpage) {
         global $con;
-        $query  = "SELECT transaction.id AS id , bill.bdate AS bdate, transaction.pdate AS pdate, transaction.payable AS payable, ";
+        $query  = "SELECT transaction.id AS id ,bid, bill.bdate AS bdate, transaction.pdate AS pdate, transaction.payable AS payable, ";
         $query .= " bill.amount AS amount ,transaction.payable-bill.amount AS dues ";
         $query .= "FROM bill , transaction ";
-        $query .= "WHERE transaction.bid=bill.id AND bill.uid={$id} ";
+        $query .= "WHERE transaction.bid=bill.id AND bill.uid={$id} AND pdate!='Null'";
         $query .= "ORDER BY bill.ddate desc "; 
         $query .= "LIMIT {$offset}, {$rowsperpage} ";
         $result = mysqli_query($con,$query);

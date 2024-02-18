@@ -67,29 +67,36 @@
                                                     <td><?php echo $row['email'] ?></td>
                                                     <td><?php echo $row['phone'] ?></td>
                                                     <td><?php echo $row['address'] ?></td>
-                                                    <td><a class='btn btn-danger btn-sm' href="#" data-toggle="modal" data-target="#delete">Delete</a></td>                                                    
+                                                    <td><?php echo $row['id'] ?></td>
+                                                    <td>
+                                                       
+                                                    <a class='btn btn-danger btn-sm' href="#" data-toggle="modal" data-target="#delete_modal_<?= $row['id']?>">Delete</a>                                                   
+                                                
+                                                    <div class="modal fade" id="delete_modal_<?= $row['id']?>" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-sm">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h3 class="modal-title"><b>DELETE USERS</b></h3>
+                                                                </div>
+                                                                <div class="modal-body text-center">
+                                                                    <p><h4>ARE YOU SURE?</h4></p>
+                                                                    <!-- <p>Do it today or forever hold your speech!</p> -->
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <form method='post' action='delete_user.php'>
+                                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">NO</button>
+                                                                        <input type="hidden" name="delete_id" value="<?php echo $row['id']; ?>">
+                                                                        <button type="submit"class='btn btn-success'>Delete</button>
+                                                                        <!--<a  class='btn btn-success' href="delete_user.php?id=<?= $row['id']?>"> YES</a>-->
+                                                                    </form>
+                                                                </div>
+                                                            </div><!-- /.modal-content -->
+                                                        </div><!-- /.modal-dialog -->
+                                                    </div><!-- /.modal -->
+                                                </td>
                                                 </tr>
-                                                <div class="modal fade" id="delete" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                                <h3 class="modal-title"><b>DELETE USERS</b></h3>
-                                            </div>
-                                            <div class="modal-body text-center">
-                                                <p><h4>ARE YOU SURE?</h4></p>
-                                                <!-- <p>Do it today or forever hold your speech!</p> -->
-                                            </div>
-                                            <div class="modal-footer">
-                                                <form>
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">NO</button>
-                                                    <a  class='btn btn-success' href="delete_user.php?id=<?= $row['id']?>"> YES</a>
-                                                </form>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-</div>
+                            </div>
                                             <?php $cnt++; } ?>
                                     </tbody>
                                 </table>

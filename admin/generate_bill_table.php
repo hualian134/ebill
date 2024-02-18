@@ -4,10 +4,10 @@
             <tr>
                 <!-- <th>#</th> -->
                 <th>USER</th>
-                <!--<th>PREVIOUS UNITS</th>
-                <th>CURRENT UNITS</th>-->
                 <th>Meter ID</th>
-                <th>UNITS</th>
+                <th>PREVIOUS UNITS</th>
+                <th>CURRENT UNITS</th>
+                <!--<th>UNITS</th>-->
                 <th>BILL DATE</th>
                 <th>DUE DATE</th>
                 <th>GENERATE</th>                                        
@@ -46,16 +46,29 @@
                         <td height="50">
                             <?php echo 'M-'.$row['uid'] ?>
                         </td>
-                        <!--<td>                                                
-                            <input class="form-control" type="tel" name="punits" placeholder="ENTER PERIVIOUS UNITS">
+                        <td>  
+                        <?php  
+                            
+                            $queryforpunit="SELECT current_unit from bill,user where user.id=bill.uid And user.id={$row['uid']}  ORDER BY bill.id DESC Limit 1 ;" ;
+                            $punit=mysqli_query($con, $queryforpunit);
+                            $punit1=mysqli_fetch_assoc($punit);
+                           
+                            if($punit1==null){
+                               echo  $_SESSION['punit']=0 ;
+                            }
+                            else{
+                                    echo   $_SESSION['punit'] = $punit1['current_unit'] ;
+                            }                       
+                        ?>
+
                         </td>
                         <td>                                                
-                            <input class="form-control" type="tel" name="cunits" placeholder="ENTER CURRENT UNITS">
-                        </td>!-->
+                            <input class="form-control" type="text" inputmode="decimal" name="cunits" placeholder="ENTER CURRENT UNITS">
+                        </td>
                     
-                        <td>                                                
-                            <input class="form-control" type="tel" name="units" placeholder="ENTER UNITS">
-                        </td>
+                        <!--<td>                                                
+                            <input class="form-control" type="text" inputmode="decimal" name="units" placeholder="ENTER UNITS">
+                        </td>-->
                         <td>
                             <?php echo $row['bdate'] ?> 
                         </td>
@@ -79,13 +92,13 @@
     </div><!-- ./table-responsive -->
     
 <script>
-    // function checkInp()
-    // {
-    //       var x=document.forms["form_gen_bill"]["units"].value;
-    //       if (isNaN(x)) 
-    //       {
-    //         alert("Must input numbers");
-    //         return false;
-    //       }
-    // }
+     function checkInp()
+     {
+       var x=document.forms["form_gen_bill"]["cunits"].value;
+          if (isNaN(x)) 
+           {
+            alert("Must input numbers");
+            return false;
+          }
+     }
 </script>

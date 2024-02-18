@@ -1,6 +1,7 @@
 <?php 
 require_once("Includes/config.php");
 require_once("Includes/session.php");
+include("signup.php");
 // if ($count===0) {
 //     $err_login="There were some problem";
 // }
@@ -69,6 +70,7 @@ if(isset($_POST['login_submit'])) {
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="index.php"><b>E-Billing System</b></a>
+                
             </div>
             <div class="navbar-collapse collapse" >
                 <?php include("login.php"); ?>
@@ -83,15 +85,70 @@ if(isset($_POST['login_submit'])) {
                 <div class="row">
                     <div class="col-lg-6 signup">
                         <h1>Electricity Billing System</h1>
-                        <p>This website at the end of its construction will act as a consumer oriented service for users for easy payment of their respective <b>Electricity Bill</b> as well as interact with their providers in case of any queries or grivances.</p>
+                        <?php 
+                        if(isset($error)){
+                            foreach($error as $msg){
+                                echo "<div class='alert alert-danger'>$msg</div>";
+                            }
+                            
+                        }
+                        
+                        ?>
                     </div>
+                   
                     <!-- /col-lg-6 -->
                     <div class="col-lg-6">
                         <h1>Sign Up</h1>
-                        <?php include("signup.php"); ?>
+                        <!--<?php //include("signup.php"); ?>-->
+                        <form action="index.php" method="post" class="form-horizontal" role="form" onsubmit="return validateForm()">
+    <center>
+    <div class="row form-group">
+        <div class="col-md-12">
+            <input type="name" class="form-control" name="name" id="name" placeholder="Full Name" required>
+            <!-- <label><?php echo $nameErr." hi";?></label> -->
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+            <!-- <label><?php echo $emailErr;?></label> -->
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <input type="password" class="form-control" name="inputPassword" id="inputPassword" placeholder="Password" required>
+            <!-- <label><?php echo $passwordErr;?></label> -->
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" required>
+            <!-- <label><?php echo $confpasswordErr;?></label><label><?php echo $confpasswordErr;?></label> -->
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <input type="tel" class="form-control" name="contactNo" placeholder="Contact No.09XXXXXXXXX" required>
+            <!-- <label><?php echo $phoneErr;?></label> -->
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <input type="address" class="form-control" name="address" placeholder="Address" required>
+            <!-- <label><?php echo $addrErr;?></label> -->
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <button name="reg_submit" class="btn btn-primary">Sign Up</button>
+        </div>
+    </div>
+    </center>
+</form>
+
                     </div>
                     <!-- /col-lg-6 -->
-
+                  
                 </div>
                 <!-- /row -->
             </div>
@@ -101,40 +158,40 @@ if(isset($_POST['login_submit'])) {
     <!-- /headerwrap -->
 
 
-    <div class="container">
+  <!--  <div class="container">
         <div class="row mt centered">
             <div class="col-lg-6 col-lg-offset-3">
                 <h1>How this Portal woks</h1>
                 <h3></h3>
             </div>
-        </div>
+        </div>-->
         <!-- /row -->
 
-        <div class="row mt centered">
+      <!--  <div class="row mt centered">
             <div class="col-lg-4">
                 <img src="assets/img/ser01.png" width="180" alt="">
                 <h4>1 - Login</h4>
                 <p></p>
-            </div>
+            </div>-->
             <!--/col-lg-4 -->
 
-            <div class="col-lg-4">
+           <!-- <div class="col-lg-4">
                 <img src="assets/img/ser02.png" width="180" alt="">
                 <h4>2 - Peruse Bills</h4>
                 <p></p>
-            </div>
+            </div>-->
             <!--/col-lg-4 -->
 
-            <div class="col-lg-4">
+           <!-- <div class="col-lg-4">
                 <img src="assets/img/ser03.png" width="180" alt="">
                 <h4>3 - Transact</h4>
                 <p></p>
-            </div>
+            </div>-->
             <!--/col-lg-4 -->
 
-        </div>
+       <!-- </div>-->
         <!-- /row -->
-    </div>
+   <!-- </div>-->
     <!-- /container -->
 
     <?php 

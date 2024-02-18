@@ -38,8 +38,38 @@
                     list($result1,$result2,) = retrieve_users_defaulting($_SESSION['aid']);
                     $row1 = mysqli_fetch_row($result1);
                     $row2 = mysqli_fetch_row($result2);
+                ?> <div class='row'>
+                <?php 
+                    $rate="SELECT * from unitsrate";
+                    $unitR = mysqli_query($con,$rate);
+                    $rateR=mysqli_fetch_assoc($unitR);
                 ?>
-                <div class="row">
+             
+             <div class="col-lg-3 col-xs-6">
+                        <div class="panel panel-bolt2">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-calculator fa-3x"></i>
+                                    </div>
+                                    <div class="col-md-9 text-right">
+                                        
+                                        <div>One unit=<?= $rateR['rate']?> Ks</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" data-toggle="modal" data-target="#rate">
+                                <div class="panel-footer">
+                                    <span class="pull-left"><b>Update Unit rate</b></span>
+                                    <span class="pull-right"><i class="fa fa-edit fa-2x"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div> <!-- ./panel-closes -->
+                      
+                <!-- ui for late user
+                    <div class="row">
                     <div class="col-lg-3 col-xs-6">
                         <div class="panel panel-bolt">
                             <div class="panel-heading">
@@ -61,9 +91,36 @@
                                 </div>
                             </a>
                         </div>
-                    </div><!-- ./panel-closes -->
-
+                    </div>./panel-closes -->
+                    <?php $cusamt="Select * from user" ;
+                            $num=mysqli_query($con,$cusamt);
+                            $count=mysqli_num_rows($num)?>
                     <div class="col-lg-3 col-xs-6">
+                        <div class="panel panel-bolt2">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-users fa-3x"></i>
+                                    </div>
+                                    <div class="col-md-9 text-right">
+                                        <div class="huge"><b></b><?php echo $count ?></div>
+                                        <div>Total Customer</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" >
+                                <div class="panel-footer">
+                                    <span class="pull-left"><b>Customer</b></span>
+                                    <span class="pull-right"><i class="fa fa-heart fa-2x"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div><!-- ./panel-closes -->
+                    
+                    
+                    <!-- ui for user defaulting
+                        <div class="col-lg-3 col-xs-6">
                         <div class="panel panel-bolt2">
                             <div class="panel-heading">
                                 <div class="row">
@@ -84,7 +141,7 @@
                                 </div>
                             </a>
                         </div>
-                    </div> <!-- ./panel-closes -->
+                    </div>  ./panel-closes -->
 
                     <div class="col-lg-3 col-xs-6">
                         <div class="panel panel-bolt2">
@@ -183,7 +240,7 @@
                 </div>
 
                 <div class='row'>
-                <?php 
+             <!--   <?php 
                     $rate="SELECT * from unitsrate";
                     $unitR = mysqli_query($con,$rate);
                     $rateR=mysqli_fetch_assoc($unitR);
@@ -210,7 +267,7 @@
                                 </div>
                             </a>
                         </div>
-                    </div> <!-- ./panel-closes -->
+                    </div> ./panel-closes -->
                             </div>
                                 
                         </div>

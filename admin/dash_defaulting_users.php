@@ -22,7 +22,7 @@
 
     elseif (isset($_POST['late_user'])) {
         $query  = "UPDATE transaction , bill , user ";
-        $query .= "SET transaction.payable=transaction.payable + 165.00 "; 
+        $query .= "SET transaction.payable=transaction.payable + 500.00 "; 
         $query .= "WHERE bill.uid=user.id AND bill.status = 'PENDING' ";
         $query .= "AND curdate() > bill.ddate AND curdate() < adddate(bill.ddate , INTERVAL 25 DAY ) ";
         $query .= "AND transaction.bid=bill.id AND transaction.payable=bill.amount ";

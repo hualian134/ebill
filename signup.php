@@ -3,9 +3,12 @@ SINGLE PAGE FORM ALONG WITH VALIDATION
 NO PHP LEAKS BACK TO THE INDEX 
  -->
 <?php
+include('Includes/config.php');
 require_once("Includes/session.php");
 $nameErr = $phoneErr = $addrErr = $emailErr = $passwordErr = $confpasswordErr = "";
 $name = $email = $password = $confpassword = $address = "";
+global $error;
+$error=array();
 $flag=0;
 
 //CHECK IF A VALID FORM STRING
@@ -15,14 +18,59 @@ function test_input($data) {
         $data = htmlspecialchars($data);
         return $data;
     }
-
+    
 if(isset($_POST["reg_submit"])) {
+       
         $email = test_input($_POST['email']); 
         $password = test_input($_POST["inputPassword"]);
         $confpassword = test_input($_POST["confirmPassword"]);
         $address = test_input($_POST["address"]);
-        $email = test_input($_POST['email']);
+        $phone=$_POST["contactNo"];
+        $name = test_input($_POST["name"]);
 
+        if(empty($email) OR empty($password) OR empty($confpassword) OR empty($address) OR empty($name) OR empty($phone)){
+            array_push($error,'Fill all field');
+        }else{
+                if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
+                    array_push($error,"Invalid email");
+                }
+                if(is_numeric($name)){
+                    array_push($error,"Invalid name");
+                }
+                if($password!==$confpassword){
+                    array_push($error,"Password not match");                
+                }
+                if(!preg_match("/^\d{11}$/", $phone)){
+                    array_push($error,"11 digit phone number is allowed");
+                }
+                $sql="SELECT * FROM user WHERE email='$email'";
+                $result = mysqli_query($con,$sql);
+                $count = mysqli_num_rows($result);
+                if($count>0){
+                    array_push($error,"Email already exist");
+                }
+                else{
+                    $sql = "INSERT INTO user (`name`,`email`,`phone`,`pass`,`address`)
+                    VALUES('$name','$email','$contactNo','$password','$address')";
+                    echo $sql;
+                    if (!mysqli_query($con,$sql))
+                    {
+                        die('Error: ' . mysqli_error($con));
+                    }
+                    header("Location:index.php");
+                }
+
+                
+            }
+
+
+        /*$sql1 = "SELECT * FROM user WHERE email='$email'";
+        $result1 = mysqli_query($con,$sql1);
+        $count = mysqli_num_rows($result1);
+        if ($count == 1) {
+            $flag=1;
+            echo "Already exist";
+        }
         // NAME VALIDATION
         if (empty($_POST["name"])) {
             $nameErr = "Name is required";
@@ -102,14 +150,26 @@ if(isset($_POST["reg_submit"])) {
             $contactNo = "";
             // echo "error here";
         } else {
-            $contactNo = test_input($_POST["contactNo"]);
-            if(!preg_match("/^d{10}$/", $_POST["contactNo"])){
+            $contactNo = $_POST["contactNo"];
+            
+            $regex = "/^(?:\+?(\d{1,3}))?[-. (]*(\d{1,3})[-. )]*(\d{1,4})[-. ]*(\d{1,9})[-. ]*(\d{1,9})?(?: *x(\d+))?$/";
+        
+            // Test the phone number against the regular expression
+            if (preg_match($regex, $contactNo)) {
+                $flag=0;
+            } else {
+                 $flag=1;
+            
+        
+
+            //if(!preg_match("/^/d{10}$/", $_POST["contactNo"])){
                 $phoneErr="10 digit phone no allowed.";
                 // $flag=1;
                 // echo "or here";
-                echo $_POST['contactNo'];
+                //echo $_POST['contactNo'];
             }
         }
+
 
         // Only if succeed from the validation thourough put  
         echo $flag; 
@@ -124,8 +184,14 @@ if(isset($_POST["reg_submit"])) {
                 die('Error: ' . mysqli_error($con));
             }
             header("Location:index.php");
-        }
+        }*/
     }
+    //if(isset($error)){
+       // header("Location:index.php");
+        //foreach($error as $e){
+          //  echo $e;
+        //}
+    //}
 ?>
 
 <?php
@@ -145,48 +211,4 @@ if(isset($_POST["reg_submit"])) {
     //     } 
     // }
 ?>
-<form action="signup.php" method="post" class="form-horizontal" role="form" onsubmit="return validateForm()">
-<center>
-    <div class="row form-group">
-        <div class="col-md-12">
-            <input type="name" class="form-control" name="name" id="name" placeholder="Full Name" required>
-            <!-- <label><?php echo $nameErr;?></label> -->
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-12">
-            <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
-            <!-- <label><?php echo $emailErr;?></label> -->
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-12">
-            <input type="password" class="form-control" name="inputPassword" id="inputPassword" placeholder="Password" required>
-            <!-- <label><?php echo $passwordErr;?></label> -->
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-12">
-            <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" required>
-            <!-- <label><?php echo $confpasswordErr;?></label><label><?php echo $confpasswordErr;?></label> -->
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-12">
-            <input type="tel" class="form-control" name="contactNo" placeholder="Contact No." required>
-            <!-- <label><?php echo $phoneErr;?></label> -->
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-12">
-            <input type="address" class="form-control" name="address" placeholder="Address" required>
-            <!-- <label><?php echo $addrErr;?></label> -->
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-10">
-            <button name="reg_submit" class="btn btn-primary">Sign Up</button>
-        </div>
-    </div>
-    </center>
-</form>
+    
