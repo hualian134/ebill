@@ -21,7 +21,7 @@
         width: 500px;
         background-color: white;
         margin: 0 auto;
-        margin-top: 50px;
+        margin-top: 2px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
       }
       .voucher h1 {
@@ -132,12 +132,12 @@
                                             <!--<td><?php echo $row['dues'].' Ks' ?></td>!-->
                                             <!--<td><?php echo $row['payable'].' Ks' ?></td>-->
                                             
-                                            <td>
+                                            <!--<td>
                                                 <?php 
                                                     if($row['pdate']!=NULL) echo $row['pdate'];
                                                     else echo "TRANSACTION PENDING";
                                                 ?>
-                                            </td>
+                                            </td>-->
                                             <td><button class="btn btn-primary form-control" data-toggle="modal"  data-target="#View_<?= $row['id']?>">View Detail</button>
                                                 <div class="modal fade" id="View_<?= $row['id']?>" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-sm">
@@ -173,12 +173,16 @@
                                                                         <td><?php echo $row['amount'].' Ks' ?></td>
                                                                         </tr>
                                                                         <tr>
+                                                                        <th>Due Date:</th>
+                                                                        <td><?php echo $bill['ddate'] ?></td>
+                                                                        </tr>
+                                                                        <tr>
                                                                         <th>Pay Date:</th>
                                                                         <td><?php echo $row['pdate'] ?></td>
                                                                         </tr>
                                                                     </table>
                                                                     <div class="voucher-info">
-                                                                        <p>Please pay by this date to avoid any late fees.</p>
+                                                                        
                                                                         <p>Thank you for your business!</p>
                                                                     </div>
                                                                     </div>

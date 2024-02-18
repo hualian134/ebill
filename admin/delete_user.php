@@ -5,6 +5,7 @@
        
         $delete_query="DELETE FROM user WHERE id=$id";
         $con->query( $delete_query);
+        //echo $id;
 
     }
 
