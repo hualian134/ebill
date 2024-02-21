@@ -5,11 +5,13 @@ NO PHP LEAKS BACK TO THE INDEX
 <?php
 include('Includes/config.php');
 require_once("Includes/session.php");
-$nameErr = $phoneErr = $addrErr = $emailErr = $passwordErr = $confpasswordErr = "";
-$name = $email = $password = $confpassword = $address = "";
+//$nameErr = $phoneErr = $addrErr = $emailErr = $passwordErr = $confpasswordErr = "";
+//$name = $email = $password = $confpassword = $address = "";
 global $error;
+global $message;
 $error=array();
-$flag=0;
+$message=array();
+//$flag=0;
 
 //CHECK IF A VALID FORM STRING
 function test_input($data) {
@@ -46,22 +48,42 @@ if(isset($_POST["reg_submit"])) {
                 $sql="SELECT * FROM user WHERE email='$email'";
                 $result = mysqli_query($con,$sql);
                 $count = mysqli_num_rows($result);
+                $result1=mysqli_fetch_assoc($result);
                 if($count>0){
                     array_push($error,"Email already exist");
                 }
-                else{
-                    $sql = "INSERT INTO user (`name`,`email`,`phone`,`pass`,`address`)
-                    VALUES('$name','$email','$contactNo','$password','$address')";
-                    echo $sql;
-                    if (!mysqli_query($con,$sql))
-                    {
-                        die('Error: ' . mysqli_error($con));
-                    }
-                    header("Location:index.php");
+                $sql1="SELECT * FROM user where phone='$phone'";
+                $result2 = mysqli_query($con,$sql1);
+                $count1 = mysqli_num_rows($result2);
+                if($count1>0){
+                    array_push($error,"Phone number is already exist");
                 }
-
                 
+                if (empty($error)){
+                    
+                    $query = "INSERT INTO user (`name`,`email`,`phone`,`pass`,`address`)
+                    VALUES(?,?,?,?,?)";
+                    $stmt = mysqli_prepare($con, $query);
+                    if ($stmt) {
+                        mysqli_stmt_bind_param($stmt, "sssss", $name, $email, $phone, $password, $address);
+                        if (mysqli_stmt_execute($stmt)) {
+
+                            array_push($message,"Registration successful!");
+                            
+                            header("Location:index.php");
+                        } else {
+                            array_push($error, "Error: " . mysqli_error($con));
+                        }
+                        mysqli_stmt_close($stmt);
+                    } else {
+                        array_push($error, "Error: " . mysqli_error($con));
+                    }
+                }
             }
+            
+           
+            
+            
 
 
         /*$sql1 = "SELECT * FROM user WHERE email='$email'";

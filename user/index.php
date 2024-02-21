@@ -28,6 +28,8 @@
         <?php 
             require_once("nav.php");
             require_once("sidebar.php");
+            require_once('change_password.php'); 
+            
         ?>
 
         <!-- Page Content -->
@@ -45,6 +47,7 @@
                         <?php
                             require_once("../Includes/session.php");
                             require_once("../Includes/config.php");
+                            
                         ?>
                         <!-- STATISTICS -->
                         <h1 style="padding-left:30px;" class="text-muted text-centered">Stats</h1>
@@ -131,3 +134,27 @@
 </body>
 
 </html>
+<?php if(isset($_SESSION['success']))
+{
+?>
+<script>
+    alertify.set('notifier','position', 'top-center');
+    alertify.success('<?php echo $_SESSION['success']?>');
+  
+</script>
+<?php 
+    unset($_SESSION['success']);
+} 
+
+if(isset($_SESSION['error']))
+{
+?>
+    <script>
+        alertify.set('notifier','position', 'top-center');
+        alertify.warning('<?php echo $_SESSION['error']?>');
+    
+    </script>
+<?php 
+}
+unset($_SESSION['error']);
+ ?>

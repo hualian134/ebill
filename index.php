@@ -87,12 +87,17 @@ if(isset($_POST['login_submit'])) {
                         <h1>Electricity Billing System</h1>
                         <?php 
                         if(isset($error)){
+                        
                             foreach($error as $msg){
                                 echo "<div class='alert alert-danger'>$msg</div>";
                             }
                             
+                        }else if(empty($error))
+                        {
+                            echo "success";
                         }
                         
+                            
                         ?>
                     </div>
                    
@@ -100,12 +105,12 @@ if(isset($_POST['login_submit'])) {
                     <div class="col-lg-6">
                         <h1>Sign Up</h1>
                         <!--<?php //include("signup.php"); ?>-->
-                        <form action="index.php" method="post" class="form-horizontal" role="form" onsubmit="return validateForm()">
+    <form action="index.php" method="post" class="form-horizontal" role="form" onsubmit="return validateForm()">
     <center>
     <div class="row form-group">
         <div class="col-md-12">
             <input type="name" class="form-control" name="name" id="name" placeholder="Full Name" required>
-            <!-- <label><?php echo $nameErr." hi";?></label> -->
+            <!-- <label><?php echo $nameErr;?></label> -->
         </div>
     </div>
     <div class="form-group">
@@ -222,3 +227,15 @@ if(isset($_POST['login_submit'])) {
 </body>
 
 </html>
+<?php if(isset($_SESSION['success']))
+{
+?>
+<script>
+    alertify.set('notifier','position', 'top-center');
+    alertify.success('<?php echo $_SESSION['success']?>');
+  
+</script>
+<?php 
+    unset($_SESSION['success']);
+} 
+

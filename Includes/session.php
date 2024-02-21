@@ -42,6 +42,7 @@
                 $_SESSION['uid']=$row['id'];
                 $_SESSION['email'] = $email;
                 $_SESSION['account']="user";
+                $_SESSION['password']=$password;
                 // echo "Yadpde";
                 header("Location:user/index.php");
             }  

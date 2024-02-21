@@ -132,12 +132,12 @@
                                             <!--<td><?php echo $row['dues'].' Ks' ?></td>!-->
                                             <!--<td><?php echo $row['payable'].' Ks' ?></td>-->
                                             
-                                            <!--<td>
+                                            <td>
                                                 <?php 
                                                     if($row['pdate']!=NULL) echo $row['pdate'];
                                                     else echo "TRANSACTION PENDING";
                                                 ?>
-                                            </td>-->
+                                            </td>
                                             <td><button class="btn btn-primary form-control" data-toggle="modal"  data-target="#View_<?= $row['id']?>">View Detail</button>
                                                 <div class="modal fade" id="View_<?= $row['id']?>" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-sm">
@@ -154,6 +154,10 @@
                                                                     <p>Customer Name: <?php echo $user['name']?></p>
                                                                     <p>Address: <?php echo $user['address']?></p>
                                                                     <table>
+                                                                        <tr>
+                                                                        <th>Bill No:</th>
+                                                                        <td height="50">EBS_<?php echo $row['bid'];?>
+                                                                        </tr>
                                                                         <tr>
                                                                         <th>Current Unit:</th>
                                                                         <td><?php echo $bill['current_unit'] ?></td>

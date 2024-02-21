@@ -9,6 +9,8 @@
         header("../index.php");
     
 ?>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -63,10 +65,41 @@
         <div class="modal-body text-center">
             <h4>Name : <code><?php echo $user ?></code></h4>
             <h4>Email : <code><?php echo $email ?></code></h4>
+                
+                <a href="#" data-toggle="modal" class="btn btn-primary" data-target="#change_password"><i class="fa fa-fw fa-lock"></i> Change Password</a>
+            
       
         </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->      
+</div><!-- /.modal -->   
+
+<!--change password-->
+<div class="modal fade" id="change_password" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title"><b><i class="fa fa-fw fa-user"></i>Change Password</b></h3>
+            </div>
+        <div class="modal-body text-center">
+            <center>
+                <form action="change_password.php" method="post">
+                    <div class="form-group">
+                        <input type="text" name="current_password" placeholder="Old password">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="new_password"placeholder="New password">
+                    </div>
+                    
+                    <input type="submit" name="change" class='btn btn-primary' value='Change'>
+                </form>
+                
+            </center>
+      
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->   
 
                                                                                                                      
