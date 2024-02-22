@@ -49,18 +49,16 @@ h1{
         echo "<div class='alert alert-danger'> $_SESSION[fail]</div>";
         unset($_SESSION['fail']);
     }?>
-    <form action="forget_password.php" method="post">
+    <form action="verify.php" method="post">
 
             <div class="group">
-                <label>Enter email</label>
-                <input type="email" class="form-control" name="email" id="email" placeholder="example@gmail.com">
+            <label>Enter  varification code</label>
+                <input type="text" class="form-control" name="valid" id="valid" placeholder="">
             </div>
-            <div class="group">
-           
         <center>
                     <div class="group">
-                        <input type="submit" class="btn btn-primary mx-auto" value="Send verification" name="send">
-                               
+                        
+                        <input type="submit" class="btn btn-success col-lg-3" value="Comfirm" name="confirm">        
                     </div>
         </center>  
     </form>

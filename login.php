@@ -21,5 +21,8 @@ NO PHP LEAKS BACK TO THE INDEX
         <input type="password" placeholder="Password" name="pass" id="pass" class="form-control">
     </div>
     <button type="login_submit" class="btn btn-success" onclick=" validateForm();">Sign In</button>
+    <button  class="btn btn-warning"><a   href='user/forget_password.php'>Forget Passsword?</a></button>
 </form>
+
+
 

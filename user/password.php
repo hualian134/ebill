@@ -11,18 +11,19 @@ if(isset($_POST['send'])){
             if($count>0){
                 $id=$user['id'];
                 $_SESSION['id']=$user['id'];
-                $one_time_password = rand(100000, 999999);
-                $sql = "UPDATE user SET  pass='$one_time_password' WHERE id=$id";
-                $con->query($sql);
+                $_SESSION['verification'] = rand(100000, 999999);
+                //$sql = "UPDATE user SET  pass='$one_time_password' WHERE id=$id";
+                //$con->query($sql);
                 $to = $user['email'];
                 $subject = "Verification Code";
-                $message = "Your verification code is: " . $one_time_password;
+                $message = "Your verification code is: " . $_SESSION['verification'];
                 $headers = "From: ebilling@example.com" . "\r\n";
                 $headers .= "Reply-To: ebilling@example.com" . "\r\n";
                 $headers .= "Content-type: text/plain; charset=UTF-8" . "\r\n";
                 mail($to, $subject, $message, $headers);
-
-                 
+                header("Location: verify.php");
+                
+           
                 
             }
             else{
@@ -35,13 +36,15 @@ if(isset($_POST['send'])){
 if(isset($_POST['confirm'])){
     $valid=$_POST['valid'];
     $id=$_SESSION['id'];
-    $query="SELECT pass From user where id=$id";
-    $result=mysqli_query($con,$query);
-    $row=mysqli_fetch_assoc($result);
-    if($valid==$row['pass']){
+    $same=$_SESSION['verification'];
+    //$query="SELECT pass From user where id=$id";
+    //$result=mysqli_query($con,$query);
+    //$row=mysqli_fetch_assoc($result);
+    if($valid==$same){
         header("location: change_password_forget.php");
     }else{
         $_SESSION['fail']='Incorrect varification code';
+        header("location: forget_password.php");
     }
 
 }

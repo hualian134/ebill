@@ -1,0 +1,18 @@
+
+
+[mail function]
+
+SMTP=smtp.gmail.com
+smtp_port=587
+sendmail_from = electricitybilling37@gmail.com
+sendmail_path = "\"C:\xampp\sendmail\sendmail.exe\" -t"
+
+[sendmail]
+
+smtp_server=smtp.gmail.com
+smtp_port=587
+error_logfile=error.log
+debug_logfile=debug.log
+auth_username=electricitybilling37@gmail.com
+auth_password=fgvv vfif iegk yljm
+force_sender=electricitybilling37@gmail.com
