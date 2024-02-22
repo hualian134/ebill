@@ -1,4 +1,4 @@
-
+need to change php.ini
 
 [mail function]
 
@@ -7,6 +7,7 @@ smtp_port=587
 sendmail_from = electricitybilling37@gmail.com
 sendmail_path = "\"C:\xampp\sendmail\sendmail.exe\" -t"
 
+after chaning the above the go to path "sendmail_path" and change
 [sendmail]
 
 smtp_server=smtp.gmail.com

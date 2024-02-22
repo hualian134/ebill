@@ -2,7 +2,9 @@
 
 **Admin Login Details**
 
-Email   : admin@gmail.com
-Password: Password
+Email   : electricitybilling37@gmail.com
+Password: admin2
+
+Some of the php file are still in process 
 
 

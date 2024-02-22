@@ -1,15 +1,9 @@
-**Log on to freeprojectscodes.com for more projects!***
-
-**Database Name: ebillsystem**
-
-**Developed by Lakshmi Narayana**
-
-**Recommended PHP Version 5.6 or Newer**
-
+The sql file is for recover procedure and function within the database;
+I really don't know how to export them.
 
 **Admin Login Details**
 
-Email   : admin@gmail.com
-Password: Password@123
+Email   : electricitybilling37@gmail.com
+Password: admin2
 
 

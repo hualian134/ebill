@@ -159,7 +159,9 @@
                                             $numrows = $row1[0];
                                             include("paging1.php");
 
-                                            
+                                            $sqlrate="SELECT * FROM unitsrate";
+                                            $resrate=mysqli_query($con, $sqlrate);
+                                            $raterow=mysqli_fetch_assoc($resrate);
 
                                             $result = retrieve_bills_due($_SESSION['uid'],$offset, $rowsperpage);
                                             // Initialising #
@@ -225,7 +227,7 @@
                                                                         </tr>
                                                                         <tr>
                                                                         <th>One Unit:</th>
-                                                                        <td><?php echo $row['units'] ?></td>
+                                                                        <td><?php echo $raterow['rate']." Ks" ?></td>
                                                                         </tr>
                                                                     </table>
                                                                     <table>

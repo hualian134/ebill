@@ -124,7 +124,10 @@
                                             
                                             $billquery="SELECT * from bill Where id={$row['bid']}";
                                             $bill_detail =mysqli_query($con,$billquery);
-                                            $bill=mysqli_fetch_array($bill_detail);?></td>
+                                            $bill=mysqli_fetch_array($bill_detail);
+                                            $sqlrate="SELECT * FROM unitsrate";
+                                            $resrate=mysqli_query($con, $sqlrate);
+                                            $raterow=mysqli_fetch_assoc($resrate);?></td>
                                             
                                             <td height="50"><?php echo $row['bdate'] ?></td>
                                             <td><?php echo $row['amount'].' Ks' ?></td>
@@ -169,6 +172,9 @@
                                                                         <tr>
                                                                         <th>Consumed Unit:</th>
                                                                         <td><?php echo $bill['units'] ?></td>
+                                                                        </tr>
+                                                                        <th>One Unit:</th>
+                                                                        <td><?php echo $raterow['rate']." Ks" ?></td>
                                                                         </tr>
                                                                     </table>
                                                                     <table>
