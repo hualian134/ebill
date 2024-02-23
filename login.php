@@ -21,8 +21,19 @@ NO PHP LEAKS BACK TO THE INDEX
         <input type="password" placeholder="Password" name="pass" id="pass" class="form-control">
     </div>
     <button type="login_submit" class="btn btn-success" onclick=" validateForm();">Sign In</button>
-    <button  class="btn btn-warning"><a   href='user/forget_password.php'>Forget Passsword?</a></button>
+    <button  class="btn btn-warning" onclick="forgetpassword();">Forget Passsword?</a></button>
 </form>
 
+<script>
+//window.open('popup.php','','width=600/ 2,height=600 / 2');
+function forgetpassword(){
+let url = 'user/forget_password.php';
+let height = 600;
+let width = 600;
+var left = (screen.width - width) / 2;
+var top = (screen.height - height) / 2;
 
+let popup=window.open(url, 'popUpWindow', 'height=' + height + ', width=' + width + ', top=' + top + ', left=' + left);
+}
+</script>
 

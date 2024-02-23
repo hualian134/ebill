@@ -1,0 +1,9 @@
+{
+    "merchantID": "JT04",
+    "invoiceNo": "1595219400",
+    "description": "2 days 1 night hotel room",
+    "amount": 10.0,
+    "currencyCode": "THB",
+    "nonceStr": "a8092512-b144-41b0-8284-568bb5e9264c",
+    "paymentChannel": ["DPAY"]
+}

@@ -44,10 +44,11 @@ h1{
 <div class="container">
         <h1>Forget Password?</h1>
         
-    <?php if(isset($_SESSION['fail'])){
-        
-        echo "<div class='alert alert-danger'> $_SESSION[fail]</div>";
-        unset($_SESSION['fail']);
+    <?php 
+        if(isset($_SESSION['fail'])){
+        $fail= $_SESSION['fail'];
+        echo "<div class='alert alert-danger'>$fail</div>";
+        //unset($_SESSION['fail']);
     }?>
     <form action="verify.php" method="post">
 

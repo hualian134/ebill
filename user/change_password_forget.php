@@ -49,7 +49,9 @@ h1{
         //echo "<div class='alert alert-danger'>$m</div>";
     }?>
     <form action="forget_password.php" method="post">
-
+            <?php if(isset($_SESSION["success"])){
+                     echo $_SESSION['success'];
+            }?>
             <div class="group">
                 <label>New Password</label>
                 <input type="password" class="form-control" name="new_p" id="new_p" placeholder="">

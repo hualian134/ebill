@@ -166,6 +166,7 @@
                         </div>
                     </div> <!-- ./panel-closes -->
 
+            
 
                     <div class="col-lg-3 col-xs-6">
                         <div class="panel panel-bolt2">
@@ -176,7 +177,7 @@
                                     </div>
                                     <div class="col-md-9 text-right">
                                         <div class="huge"><b></b><?php include('billamtcount.php'); ?></div>
-                                        <div>Total Transaction Amount</div>
+                                        <div>Transaction Amount</div>
                                     </div>
                                 </div>
                             </div>
@@ -188,7 +189,7 @@
                                 </div>
                             </a>
                         </div>
-                    </div> <!-- ./panel-closes -->
+                    </div><!-- ./panel-closes -->
                 </div><!-- ./row -->
 
 
@@ -227,7 +228,7 @@
                                     </div>
                                     <div class="col-md-9 text-right">
                                         <div class="huge"><b></b><?php echo $row3[0]; ?></div>
-                                        <div>Unprocessed Complaints</div>
+                                        <div>Unprocess Complaints</div>
                                     </div>
                                 </div>
                             </div>

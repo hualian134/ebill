@@ -1,6 +1,14 @@
 <?php 
 session_start();
+                //Load Composer's autoloader
+                use PHPMailer\PHPMailer\PHPMailer;
+                use PHPMailer\PHPMailer\SMTP;
+                use PHPMailer\PHPMailer\Exception;
 
+                require '../phpmailer/src/Exception.php';
+                require '../phpmailer/src/PHPMailer.php';
+                require '../phpmailer/src/SMTP.php';
+                $mail = new PHPMailer(true);
 if(isset($_POST['send'])){
     $email=$_POST['email'];
     if(!empty($email)){
@@ -14,14 +22,36 @@ if(isset($_POST['send'])){
                 $_SESSION['verification'] = rand(100000, 999999);
                 //$sql = "UPDATE user SET  pass='$one_time_password' WHERE id=$id";
                 //$con->query($sql);
-                $to = $user['email'];
-                $subject = "Verification Code";
-                $message = "Your verification code is: " . $_SESSION['verification'];
-                $headers = "From: ebilling@example.com" . "\r\n";
-                $headers .= "Reply-To: ebilling@example.com" . "\r\n";
-                $headers .= "Content-type: text/plain; charset=UTF-8" . "\r\n";
-                mail($to, $subject, $message, $headers);
+                //$to = $user['email'];
+                //$subject = "Verification Code";
+                //$message = "Your verification code is: " . $_SESSION['verification'];
+                //$headers = "From: ebilling@example.com" . "\r\n";
+                //$headers .= "Reply-To: ebilling@example.com" . "\r\n";
+                //$headers .= "Content-type: text/plain; charset=UTF-8" . "\r\n";
+                //mail($to, $subject, $message, $headers);
+                
+
+
+
+                try{
+                //Create an instance; passing `true` enables exceptions
+                
+                $mail->From='electricitybilling37@example.com';
+                $mail->FromName="Electricity Billing";
+                $mail->addAddress($user['email']);
+                //$mail->addReplyTo("zawkhantwin@gmail.com","Zaw");
+                
+                $mail->Subject = 'Verification Code"';
+                $mail->Body    = $_SESSION['verification'];
+                $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+            
+                $mail->send();
+                echo 'Message has been sent';
                 header("Location: verify.php");
+            } catch (Exception $e) {
+                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
+                
                 
            
                 
@@ -44,7 +74,7 @@ if(isset($_POST['confirm'])){
         header("location: change_password_forget.php");
     }else{
         $_SESSION['fail']='Incorrect varification code';
-        header("location: forget_password.php");
+        header("location: verify.php");
     }
 
 }
@@ -55,7 +85,7 @@ if(isset($_POST['update'])){
     if( $new_password== $confirm){
         $sql = "UPDATE user SET  pass='$new_password' WHERE id=$id";
         if($con->query($sql)){
-            header('location: ../index.php');
+            $_SESSION['success']='<div class="alert alert-success">Your password is Update!</div>';
         }
         
     }
