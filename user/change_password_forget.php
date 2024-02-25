@@ -48,7 +48,7 @@ h1{
        // $m=$_SESSION['error'];
         //echo "<div class='alert alert-danger'>$m</div>";
     }?>
-    <form action="forget_password.php" method="post">
+    <form action="change_password_forget.php" method="post">
             <?php if(isset($_SESSION["success"])){
                      echo $_SESSION['success'];
             }?>

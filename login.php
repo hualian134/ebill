@@ -13,7 +13,7 @@ NO PHP LEAKS BACK TO THE INDEX
 // }
   ?>
 
-<form action="index.php" class="navbar-form navbar-right" role="form" method="post">
+<form action="" class="navbar-form navbar-right" role="form" method="post">
     <div class="form-group">
         <input type="text" placeholder="Email" name="email" id="email" class="form-control">
     </div>

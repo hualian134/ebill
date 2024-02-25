@@ -86,6 +86,7 @@ if(isset($_POST['update'])){
         $sql = "UPDATE user SET  pass='$new_password' WHERE id=$id";
         if($con->query($sql)){
             $_SESSION['success']='<div class="alert alert-success">Your password is Update!</div>';
+            
         }
         
     }

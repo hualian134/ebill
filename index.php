@@ -28,7 +28,20 @@ if(isset($_POST['login_submit'])) {
         }
     }
 }
+//if(isset( $_SESSION['success'])){
+  //  echo $_SESSION['succcess'];
+//}
+if(isset($_SESSION['msg'])){
 ?>
+    <script>
+        alertify.set('notifier','position', 'top-center');
+        alertify.warning('<?php $_SESSION['msg']; ?>');
+    
+    </script>
+<?php 
+}
+//unset($_SESSION['msg']);
+ ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -64,7 +77,18 @@ if(isset($_POST['login_submit'])) {
 </head>
 
 <body>
-
+             <?php
+            if(isset($_SESSION['msg'])){
+            ?>
+                <script>
+                    alertify.set('notifier','position', 'top-center');
+                    alertify.warning('<?php $_SESSION['msg']; ?>');
+                
+                </script>
+            <?php 
+            }
+            //unset($_SESSION['msg']);
+            ?>
     <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">

@@ -8,7 +8,10 @@
     
     $error=array();
     $id=$_SESSION['uid'];
-    $pass=$_SESSION['password'];
+    //$pass=$_SESSION['password'];
+    $sql='Select * from  user where id="'.$id.'"';
+    $res = mysqli_query($con,$sql);
+    $row=mysqli_fetch_assoc($res);
     function test_input($data) {
         $data = trim($data);
         $data = stripslashes($data);
@@ -18,10 +21,10 @@
     
     if(isset($_POST["change"]) && !empty($_POST["new_password"]))
     {   
-        if($pass==$_POST['current_password']){
+        if($row['pass']==$_POST['current_password']){
             $new_password=test_input($_POST["new_password"]);
             $query  = " UPDATE user SET pass='{$new_password}' WHERE id={$id}";
-            echo $_SESSION['success']='Password changed';
+             $_SESSION['success']='Password changed successfully!';
             if (!mysqli_query($con,$query))
             {
                 die('Error: ' . mysqli_error($con));        
@@ -29,7 +32,7 @@
            
         }else
             {
-            echo $_SESSION['error']="Incorrect Password!";
+             $_SESSION['error']="Incorrect Password!";
             }
     }
     @header("Location:index.php");

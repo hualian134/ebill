@@ -97,10 +97,10 @@
                                 <tbody>
                                     <?php 
                                     $id=$_SESSION['uid'];
-
-                                            $user_detail=retrieve_user_details($id) ;
+                                    
+                                            $user_detail=retrieve_user_details($id);
                                             $user=mysqli_fetch_assoc($user_detail);
-
+                                    
                                     $query1 = "SELECT COUNT(*) FROM bill , transaction WHERE transaction.bid=bill.id AND bill.uid={$id}  ";
                                     $result1 = mysqli_query($con,$query1);
                                     $row1 = mysqli_fetch_row($result1);

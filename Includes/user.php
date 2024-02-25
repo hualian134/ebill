@@ -36,7 +36,7 @@
         $query  = "SELECT transaction.id AS id ,bid, bill.bdate AS bdate, transaction.pdate AS pdate, transaction.payable AS payable, ";
         $query .= " bill.amount AS amount ,transaction.payable-bill.amount AS dues ";
         $query .= "FROM bill , transaction ";
-        $query .= "WHERE transaction.bid=bill.id AND bill.uid={$id} AND status!='PENDING'";
+        $query .= "WHERE transaction.bid=bill.id AND bill.uid={$id} AND transaction.status!='PENDING'";
         $query .= "ORDER BY bill.ddate desc "; 
         $query .= "LIMIT {$offset}, {$rowsperpage} ";
         $result = mysqli_query($con,$query);
@@ -45,7 +45,7 @@
 
     function retrieve_user_details($id) {
         global $con;
-        $query  = "SELECT * FROM user ";
+        $query  = "SELECT * FROM user where id=$id";
         $result = mysqli_query($con, $query);
 
         if (!$result)   

@@ -1,7 +1,8 @@
 <?php 
-session_start();
-//Load Composer's autoloader
 
+/*include("signup.php");
+//Load Composer's autoloader
+include("Includes/config.php");
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -13,42 +14,42 @@ require 'phpmailer/src/SMTP.php';
 //$valid= email_valid('zawkhantwin134@gmail.com');
 //echo $valid;
 //function email_valid($email){
-
+$email=$_SESSION['email'];
+$verify=rand(10000,99999);
 try{
     $mail = new PHPMailer(true);
     //Create an instance; passing `true` enables exceptions
    
     $mail->From='electricitybilling37@example.com';
     $mail->FromName="Electricity Billing";
-    $mail->addAddress($_SESSION['email']);
+    $mail->addAddress($email);
     //$mail->addReplyTo("zawkhantwin@gmail.com","Zaw");
     
     $mail->Subject = 'Verification Code';
-    $mail->Body    = 'The verification code is: '.$_SESSION['verify'];
+    $mail->Body    = 'The verification code is: '.$verify;
     //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     $mail->send();
 
-    return true;
+    echo "SENT";
     
    
 
 } catch (Exception $e) {
-    return "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
-//}
+//}*/
 if(isset($_POST['confirm'])){
-    $verify=$_POST['verify'];
-        function verification($verify1 ){
-            global $verify;
-        if ($verify ==$verify1){
-            echo "'Verification Successful!'";
-            return true;
+    $verify1=$_POST['verify'];
+        
+        if ($verify1 == $_SESSION['verify']){
+            $sql="Update user SET verify=1 where email='$email'";
+            $con->query($sql);
+            $_SESSION['error']="Register Successful!";
             
         }else{
-            return false;
-        }
-    }    
+            $_SESSION['error']="Incorrect verification code";;
+        }    
 }
 
 ?>
@@ -94,11 +95,11 @@ h1{
     
         <h1>Verify Email</h1>
         
-    <?php 
-        if(isset($_SESSION['fail'])){
-        
-        echo "<div class='alert alert-danger'> $_SESSION[fail]</div>";
-        unset($_SESSION['fail']);
+    <?php
+        if(isset($_SESSION['error'])){
+        $e=$_SESSION['error'];
+        echo "<div class='alert alert-danger'> $ ['error']</div>";
+        //unset($_SESSION['error']);
     }?>
     <form action="popup.php" method="post">
 

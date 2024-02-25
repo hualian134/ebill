@@ -1,0 +1,27 @@
+body{
+    padding: 60px;
+    margin: auto;
+    
+}
+h1{
+    text-align: center;
+    padding-bottom: 35px;
+    font-weight:bold;
+    color:blue;
+    text-shadow: 2px 4px lightskyblue;
+    
+}
+
+
+.container{
+    padding-top:50px;
+    max-width: 600px;
+    margin: auto;
+    padding: 50px;
+    background-color: white(75, 70, 70);
+    box-shadow: deepskyblue 0px 7px 29px 0px;
+}
+
+.group{
+    margin-bottom: 30px;
+}

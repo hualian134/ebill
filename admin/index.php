@@ -92,7 +92,7 @@
                             </a>
                         </div>
                     </div>./panel-closes -->
-                    <?php $cusamt="Select * from user" ;
+                    <?php $cusamt="Select * from user  where verify=1" ;
                             $num=mysqli_query($con,$cusamt);
                             $count=mysqli_num_rows($num)?>
                     <div class="col-lg-3 col-xs-6">

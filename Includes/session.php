@@ -32,7 +32,7 @@
             //DB HAS 2 TABLES ADMIN AND USER BOTH HAVING THEIR OWN ATTRIBUTES
             //EMAIL AND PASSWORD      
             // user       
-            $sql = "SELECT * FROM user WHERE email='$email' AND pass='$password' ";
+            $sql = "SELECT * FROM user WHERE email='$email' AND pass='$password' AND verify=1";
             $result = mysqli_query($con,$sql);
             $count = mysqli_num_rows($result);
             if ($count == 1) {
@@ -57,6 +57,11 @@
                 $_SESSION['aid']=$row['id'];
                 $_SESSION['account']="admin";
                 header("Location:admin/index.php");
+            }
+            else{
+                echo $_SESSION['msg']="Email or Password is  incorrect!";
+                header("Location: index.php");
+                
             }
 
         }

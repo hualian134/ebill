@@ -6,7 +6,7 @@
         $query  = "SELECT user.name AS user, bill.bdate AS bdate , bill.units AS units , bill.amount AS amount , bill.id as bid ";
         $query .= ", bill.ddate AS ddate, bill.status AS status ,user.id AS uid";
         $query .= " FROM user , bill ";
-        $query .= " WHERE user.id=bill.uid AND aid={$id} ";
+        $query .= " WHERE user.id=bill.uid AND aid={$id} AND user.verify=1 ";
         $query .= " ORDER BY bill.id DESC ";
         $query .= "LIMIT {$offset}, {$rowsperpage} ";
 
@@ -50,7 +50,7 @@
     function retrieve_users_detail($id,$offset, $rowsperpage)
     {
         global $con;
-        $query  = "SELECT * FROM user ";
+        $query  = "SELECT * FROM user where verify=1";
         $query .= " LIMIT {$offset}, {$rowsperpage} ";
         $result = mysqli_query($con,$query);
         if($result === FALSE) {

@@ -67,7 +67,7 @@
                                                     <td><?php echo $row['email'] ?></td>
                                                     <td><?php echo $row['phone'] ?></td>
                                                     <td><?php echo $row['address'] ?></td>
-                                                    <td><?php echo $row['id'] ?></td>
+                                                    <!-- <td><?php echo $row['id'] ?></td> -->
                                                     <td>
                                                        
                                                     <a class='btn btn-danger btn-sm' href="#" data-toggle="modal" data-target="#delete_modal_<?= $row['id']?>">Delete</a>                                                   

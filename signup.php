@@ -3,8 +3,11 @@ SINGLE PAGE FORM ALONG WITH VALIDATION
 NO PHP LEAKS BACK TO THE INDEX 
  -->
 <?php
+
 include('Includes/config.php');
+
 require_once("Includes/session.php");
+
 //$nameErr = $phoneErr = $addrErr = $emailErr = $passwordErr = $confpasswordErr = "";
 //$name = $email = $password = $confpassword = $address = "";
 global $error;
@@ -30,6 +33,13 @@ if(isset($_POST["reg_submit"])) {
         $phone=$_POST["contactNo"];
         $name = test_input($_POST["name"]);
 
+
+        $_SESSION['verfiy_email']=$email;
+        $_SESSION['verfiy_password']=$password;
+        $_SESSION['verfiy_address']=$address;
+        $_SESSION['verfiy_phone']=$phone;
+        $_SESSION['verfiy_name']=$name;
+        
         if(empty($email) OR empty($password) OR empty($confpassword) OR empty($address) OR empty($name) OR empty($phone)){
             array_push($error,'Fill all field');
         }else{
@@ -45,14 +55,14 @@ if(isset($_POST["reg_submit"])) {
                 if(!preg_match("/^\d{11}$/", $phone)){
                     array_push($error,"11 digit phone number is allowed");
                 }
-                $sql="SELECT * FROM user WHERE email='$email'";
+                $sql="SELECT * FROM user WHERE email='$email'and verify=1";
                 $result = mysqli_query($con,$sql);
                 $count = mysqli_num_rows($result);
                 $result1=mysqli_fetch_assoc($result);
                 if($count>0){
                     array_push($error,"Email already exist");
                 }
-                $sql1="SELECT * FROM user where phone='$phone'";
+                $sql1="SELECT * FROM user where phone='$phone'AND verify=1";
                 $result2 = mysqli_query($con,$sql1);
                 $count1 = mysqli_num_rows($result2);
                 if($count1>0){
@@ -60,6 +70,7 @@ if(isset($_POST["reg_submit"])) {
                 }
                 
                 if (empty($error)){
+                    $_SESSION['email']=$email;
                     
                     $query = "INSERT INTO user (`name`,`email`,`phone`,`pass`,`address`)
                     VALUES(?,?,?,?,?)";
@@ -70,7 +81,7 @@ if(isset($_POST["reg_submit"])) {
 
                             array_push($message,"Registration successful!");
                             
-                            header("Location:index.php");
+                            header("Location:verification.php");
                         } else {
                             array_push($error, "Error: " . mysqli_error($con));
                         }
