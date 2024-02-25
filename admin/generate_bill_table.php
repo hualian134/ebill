@@ -27,7 +27,7 @@
                 <tr>
                     <form action="generate_bill.php" method="post" name="form_gen_bill" onsubmit="return checkInp()">
                     <?php
-                        $query3 = "SELECT bdate as bdate1 from bill ,user WHERE user.id=bill.uid and user.id={$row['uid']} ORDER BY bill.id DESC ";
+                        $query3 = "SELECT bdate as bdate1 from bill ,user WHERE user.id=bill.uid and user.id={$row['uid']} and user.verify=1 ORDER BY bill.id DESC ";
                         $result3 = mysqli_query($con,$query3);
                         $flag=0;
                         while($row2 = mysqli_fetch_assoc($result3)){

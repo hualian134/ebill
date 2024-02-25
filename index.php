@@ -28,9 +28,9 @@ if(isset($_POST['login_submit'])) {
         }
     }
 }
-//if(isset( $_SESSION['success'])){
-  //  echo $_SESSION['succcess'];
-//}
+if(isset( $_SESSION['success'])){
+    echo $_SESSION['success'];
+}
 if(isset($_SESSION['msg'])){
 ?>
     <script>
@@ -88,6 +88,7 @@ if(isset($_SESSION['msg'])){
             <?php 
             }
             //unset($_SESSION['msg']);
+            
             ?>
     <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top">
@@ -262,4 +263,4 @@ if(isset($_SESSION['msg'])){
 <?php 
     unset($_SESSION['success']);
 } 
-
+?>

@@ -49,11 +49,8 @@ if(isset($_POST["reg_submit"])) {
                 if(is_numeric($name)){
                     array_push($error,"Invalid name");
                 }
-                if($password!==$confpassword){
-                    array_push($error,"Password not match");                
-                }
-                if(!preg_match("/^\d{11}$/", $phone)){
-                    array_push($error,"11 digit phone number is allowed");
+                if (strlen($name)<3){
+                    array_push($error,"Name  must be at least 3 characters long");
                 }
                 $sql="SELECT * FROM user WHERE email='$email'and verify=1";
                 $result = mysqli_query($con,$sql);
@@ -62,23 +59,37 @@ if(isset($_POST["reg_submit"])) {
                 if($count>0){
                     array_push($error,"Email already exist");
                 }
-                $sql1="SELECT * FROM user where phone='$phone'AND verify=1";
+                
+                if($password!==$confpassword){
+                    array_push($error,"Password not match");                
+                }
+                if(strlen($password)<8 OR strlen($password)>20){
+                    array_push($error,"Password length must be  between 8 to 20");
+                }
+                if(!preg_match("/^\d{11}$/",$phone)){
+                    array_push($error,"11 digit phone number is allowed");
+                }
+                
+                $sql1="SELECT * FROM user where phone='$phone' AND verify=1";
                 $result2 = mysqli_query($con,$sql1);
                 $count1 = mysqli_num_rows($result2);
+                
                 if($count1>0){
-                    array_push($error,"Phone number is already exist");
+                    array_push($error,"Phone number is already exist!");
                 }
                 
                 if (empty($error)){
                     $_SESSION['email']=$email;
-                    
+                    $date=date("Y/M/D");
                     $query = "INSERT INTO user (`name`,`email`,`phone`,`pass`,`address`)
                     VALUES(?,?,?,?,?)";
                     $stmt = mysqli_prepare($con, $query);
                     if ($stmt) {
                         mysqli_stmt_bind_param($stmt, "sssss", $name, $email, $phone, $password, $address);
                         if (mysqli_stmt_execute($stmt)) {
-
+                            $update="Update user SET create_date=curdate() Where  name='$name' and email='$email' and phone='$phone'
+                                    and pass='$password' and address='$address'";
+                            $con->query($update);
                             array_push($message,"Registration successful!");
                             
                             header("Location:verification.php");

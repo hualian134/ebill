@@ -155,4 +155,15 @@
 </body>
 
 </html>
-
+<?php if(isset($_SESSION['generate_error']))
+{
+?>
+<script>
+    alertify.set('notifier','position', 'top-center');
+    alertify.success('<?php echo $_SESSION['generate_error']?>');
+  
+</script>
+<?php 
+  //  unset($_SESSION['generate_error']);
+} 
+?>

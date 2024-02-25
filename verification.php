@@ -35,6 +35,7 @@ if(isset($_POST["get"]) && !empty($email)){
         //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
     
         $mail->send();
+        $_SESSION['send']= "Email has been sent! Please check your email.";
 
        
         
@@ -49,12 +50,16 @@ if(isset($_POST['confirm'])){
     $verify=$_POST['verify'];
         $set=1;
         if ($verify==$_SESSION['varify_code']){
-            $sql="Update user SET verify=$set where name='$name' AND email='$email' and phone='$phone' AND pass='$password' AND address='$address'
+            $sql="UPDATE user SET verify=$set where name='$name' AND email='$email' and phone='$phone' AND pass='$password' AND address='$address'
                     ORDER BY id desc LIMIT 1";
                     if($con->query($sql)){
-                        $query="DELETE  FROM user WHERE email='".$email."' AND  verify!=1";
-                        if($con->query($query)){
-                         $_SESSION['success']='<script>alert.success("Registration Successful")</script>';
+                        $query="DELETE FROM user WHERE email='$email' AND verify!=1;";
+                        $query.="DELETE FROM user WHERE verify!=1 and create_date<curdate()";
+
+                        if($con->multi_query($query)){
+                         $_SESSION['success']='<script>
+                         alertify.set("notifier","position", "top-center");
+                        alert.success("Registration Successful")</script>';
                         header('Location: index.php');
                         }
                     }   
@@ -92,6 +97,12 @@ let popup=window.open(url, 'popUpWindow', 'height=' + height + ', width=' + widt
         <h1>Verify Email</h1>
         
     <?php
+    if(isset($_SESSION['send'])){
+        $e=$_SESSION['send'];
+        echo "<div class='alert alert-success'>$e</div>";
+        unset($_SESSION['send']);
+    }
+    
         if(isset($_SESSION['error'])){
         $e=$_SESSION['error'];
         echo "<div class='alert alert-danger'> $e</div>";
@@ -111,7 +122,9 @@ let popup=window.open(url, 'popUpWindow', 'height=' + height + ', width=' + widt
                             
                             <input type="submit" class="btn btn-success btn-lg" value="Comfirm" name="confirm"> 
                             <div>
-                            <input type="submit" class="btn btn-dafault btn-lg" value="Send verification code" name="get">
+                                <div>
+                                    <input type="submit" class="btn btn-warning" value="Send verification code" name="get">
+                                </div>
                             </div>
                        </div>   
                     </div>

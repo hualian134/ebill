@@ -39,19 +39,20 @@ $punit=mysqli_query($con, $queryforpunit);
 $punit1=mysqli_fetch_assoc($punit);
             $punits=$punit1['current_unit'];
             if($punits==null) $punits=0;
-            $units=$cunits-$punits;
-            $query1 = "call unitstoamount({$units} , @x)";
-            $result1 = mysqli_query($con,$query1);  
+        if($cunits>$punits){
+                $units=$cunits-$punits;
+                $query1 = "call unitstoamount({$units} , @x)";
+                $result1 = mysqli_query($con,$query1);  
 
-// INSERTING VALUES INTO BILL
-            $query  = " INSERT INTO bill (aid , uid , previous_unit , current_unit , units , amount , status , bdate , ddate )";
-            $query .= " VALUES ( {$aid} , {$uid} ,{$punits},{$cunits}, {$units} , @x , 'PENDING' , '{$bdate}' , '{$ddate}' )";
-            $result2 = mysqli_query($con,$query);  
-            if (!mysqli_query($con,$query1))
-            {
-                die('Error: ' . mysqli_error($con));
-            }
-
+    // INSERTING VALUES INTO BILL
+                $query  = " INSERT INTO bill (aid , uid , previous_unit , current_unit , units , amount , status , bdate , ddate )";
+                $query .= " VALUES ( {$aid} , {$uid} ,{$punits},{$cunits}, {$units} , @x , 'PENDING' , '{$bdate}' , '{$ddate}' )";
+                $result2 = mysqli_query($con,$query);  
+                if (!mysqli_query($con,$query1))
+                {
+                    die('Error: ' . mysqli_error($con));
+                }
+    
 // INSERTING VALUES INTO TRANSACTION            
 
             $query2 = "SELECT id , amount FROM bill WHERE aid={$aid} AND uid={$uid} AND units={$units} ";
@@ -70,5 +71,9 @@ $punit1=mysqli_fetch_assoc($punit);
             
         }  
     }
+}else
+{
+    $_SESSION['generate_error']='Generate bill error';
+}
     header("Location:bill.php");
 ?>

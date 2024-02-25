@@ -19,7 +19,7 @@
 
     function retrieve_bill_data($offset, $rowsperpage){
         global $con;
-        $query  = "SELECT curdate() AS bdate , adddate( curdate(),INTERVAL 30 DAY ) AS ddate , user.id AS uid , user.name AS uname FROM user ";
+        $query  = "SELECT curdate() AS bdate , adddate( curdate(),INTERVAL 30 DAY ) AS ddate , user.id AS uid , user.name AS uname FROM user where verify=1";
         $query .= " LIMIT {$offset}, {$rowsperpage} ";
         // echo $query;
         $result = mysqli_query($con,$query);

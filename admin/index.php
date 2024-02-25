@@ -228,7 +228,7 @@
                                     </div>
                                     <div class="col-md-9 text-right">
                                         <div class="huge"><b></b><?php echo $row3[0]; ?></div>
-                                        <div>Unprocess Complaints</div>
+                                        <div>Unprocess Complain</div>
                                     </div>
                                 </div>
                             </div>

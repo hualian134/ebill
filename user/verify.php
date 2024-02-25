@@ -58,7 +58,7 @@ h1{
             </div>
         <center>
                     <div class="group">
-                        
+                        <!-- <a href='../index.php' class="btn btn-primary">Back</a> -->
                         <input type="submit" class="btn btn-success col-lg-3" value="Comfirm" name="confirm">        
                     </div>
         </center>  
