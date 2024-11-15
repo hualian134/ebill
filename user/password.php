@@ -16,6 +16,7 @@ if(isset($_POST['send'])){
             $result=mysqli_query($con,$query);
             $user=mysqli_fetch_assoc($result);
             $count=mysqli_num_rows($result);
+            //for user
             if($count>0){
                 $id=$user['id'];
                 $_SESSION['id']=$user['id'];
@@ -46,7 +47,7 @@ if(isset($_POST['send'])){
                 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
             
                 $mail->send();
-                echo 'Message has been sent';
+                $_SESSION['msg']='Verification code has been sent!Please check your email';
                 header("Location: verify.php");
             } catch (Exception $e) {
                 echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
@@ -56,6 +57,52 @@ if(isset($_POST['send'])){
            
                 
             }
+
+            $query="SELECT * from admin where email='$email'";
+            $result=mysqli_query($con,$query);
+            $admin=mysqli_fetch_assoc($result);
+            $count=mysqli_num_rows($result);
+            if($count>0){
+                $id=$admin['id'];
+                $_SESSION['id']=$admin['id'];
+                $_SESSION['verification'] = rand(100000, 999999);
+                //$sql = "UPDATE user SET  pass='$one_time_password' WHERE id=$id";
+                //$con->query($sql);
+                //$to = $user['email'];
+                //$subject = "Verification Code";
+                //$message = "Your verification code is: " . $_SESSION['verification'];
+                //$headers = "From: ebilling@example.com" . "\r\n";
+                //$headers .= "Reply-To: ebilling@example.com" . "\r\n";
+                //$headers .= "Content-type: text/plain; charset=UTF-8" . "\r\n";
+                //mail($to, $subject, $message, $headers);
+                
+
+
+
+                try{
+                //Create an instance; passing `true` enables exceptions
+                
+                $mail->From='electricitybilling37@example.com';
+                $mail->FromName="Electricity Billing";
+                $mail->addAddress($admin['email']);
+                //$mail->addReplyTo("zawkhantwin@gmail.com","Zaw");
+                
+                $mail->Subject = 'Verification Code"';
+                $mail->Body    = $_SESSION['verification'];
+                $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+            
+                $mail->send();
+                $_SESSION['msg']='Verification code has been sent!Please check your email';
+                header("Location: verify.php");
+            } catch (Exception $e) {
+                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
+                
+                
+           
+                
+            }
+            
             else{
                 $_SESSION['fail']='Account does not exist.';
         }

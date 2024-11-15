@@ -20,7 +20,9 @@
     {
         $email = "";
         if (isset($_POST['email']) && isset($_POST['pass']))
-        {
+        {   
+            
+
             $email=$_POST['email'];
             $password=$_POST['pass'];            
             // some prereq-safeguards for the purpose of DB searching ->
@@ -29,6 +31,9 @@
             $password = stripslashes($password);
             $password = mysqli_real_escape_string($con,$password);
             
+            //Query for delete duplicate user data
+            
+
             //DB HAS 2 TABLES ADMIN AND USER BOTH HAVING THEIR OWN ATTRIBUTES
             //EMAIL AND PASSWORD      
             // user       

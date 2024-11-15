@@ -11,6 +11,15 @@ h1{
     text-shadow: 2px 4px lightskyblue;
     
 }
+.subBox{
+    padding: 10px;
+}
+
+.control{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
 
 .container{

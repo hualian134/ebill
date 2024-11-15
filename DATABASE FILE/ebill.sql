@@ -1,5 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `ebillingsystem` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
-USE `ebillingsystem`;
+CREATE DATABASE  IF NOT EXISTS `ebillsystem3` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+USE `ebillsystem3`;
 -- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: localhost    Database: ebillsystem
@@ -39,7 +39,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'Admin1','admin@gmail.com','Password'),(2,'Admin2','admin2@gmail.com','admin2');
+INSERT INTO `admin` VALUES (1,'Admin1','admin@gmail.com','Password'),(2,'Admin2','electricitybilling37@gmail.com','admin2');
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,6 +54,8 @@ CREATE TABLE `bill` (
   `id` int(14) NOT NULL AUTO_INCREMENT,
   `aid` int(14) NOT NULL,
   `uid` int(14) NOT NULL,
+  `previous_unit` int(10) unsigned NOT NULL,
+  `current_unit` int(10) unsigned NOT NULL,
   `units` int(10) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `status` varchar(10) NOT NULL,
@@ -64,7 +66,7 @@ CREATE TABLE `bill` (
   KEY `uid` (`uid`),
   CONSTRAINT `bill_ibfk_1` FOREIGN KEY (`aid`) REFERENCES `admin` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `bill_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +75,7 @@ CREATE TABLE `bill` (
 
 LOCK TABLES `bill` WRITE;
 /*!40000 ALTER TABLE `bill` DISABLE KEYS */;
-INSERT INTO `bill` VALUES (35,1,19,123,2460.00,'PROCESSED','2024-02-11','2024-03-12'),(36,1,20,400,14000.00,'PROCESSED','2024-02-07','2024-02-10'),(37,1,20,490,18500.00,'PENDING','2024-12-09','2024-02-09'),(38,1,20,123,0.00,'PENDING','2024-02-11','2024-03-12'),(39,1,21,123,2460.00,'PENDING','2023-11-11','2023-12-12'),(40,1,19,600,12000.00,'PENDING','2024-02-12','2024-03-13'),(41,1,20,1,50.00,'PENDING','2024-02-12','2024-03-13'),(42,1,21,111,5550.00,'PENDING','2024-02-12','2024-03-13');
+INSERT INTO `bill` VALUES (62,1,35,0,101,101,5050.00,'PROCESSED','2024-02-18','2024-03-19'),(63,1,35,0,301,301,15050.00,'PENDING','2024-02-19','2024-03-20'),(64,1,35,0,501,501,25050.00,'PROCESSED','2024-02-20','2024-03-21'),(67,1,35,501,701,200,10000.00,'PROCESSED','2024-02-17','2024-03-18'),(68,1,73,0,124,124,6200.00,'PENDING','2024-02-22','2024-03-23'),(69,1,92,0,500,500,25000.00,'PROCESSED','2024-02-24','2024-03-25'),(71,2,35,701,800,99,4950.00,'PENDING','2024-02-25','2024-03-26'),(72,2,92,500,1000,500,25000.00,'PROCESSED','2024-02-25','2024-03-26'),(73,2,92,1000,1648,648,32400.00,'PROCESSED','2024-02-26','2024-03-27');
 /*!40000 ALTER TABLE `bill` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,7 +97,7 @@ CREATE TABLE `complaint` (
   KEY `uid` (`uid`),
   CONSTRAINT `complaint_ibfk_1` FOREIGN KEY (`aid`) REFERENCES `admin` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `complaint_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,7 +106,7 @@ CREATE TABLE `complaint` (
 
 LOCK TABLES `complaint` WRITE;
 /*!40000 ALTER TABLE `complaint` DISABLE KEYS */;
-INSERT INTO `complaint` VALUES (15,19,2,'Bill Generated Late','NOT PROCESSED'),(16,20,1,'Previous Complaint Not Processed','NOT PROCESSED');
+INSERT INTO `complaint` VALUES (19,73,2,'Transaction Not Processed','PROCESSED'),(20,92,2,'Transaction Not Processed','PROCESSED'),(21,92,2,'Bill Not Correct','PROCESSED'),(22,92,1,'Bill Not Correct','PROCESSED'),(23,92,1,'Previous Complaint Not Processed','NOT PROCESSED');
 /*!40000 ALTER TABLE `complaint` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,7 +126,7 @@ CREATE TABLE `transaction` (
   PRIMARY KEY (`id`),
   KEY `bid` (`bid`),
   CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`bid`) REFERENCES `bill` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,7 +135,7 @@ CREATE TABLE `transaction` (
 
 LOCK TABLES `transaction` WRITE;
 /*!40000 ALTER TABLE `transaction` DISABLE KEYS */;
-INSERT INTO `transaction` VALUES (35,35,2460.00,'2024-02-11','PROCESSED'),(36,36,14165.00,'2024-02-11','PROCESSED'),(37,37,18500.00,NULL,'PENDING'),(38,38,0.00,NULL,'PENDING'),(39,39,2460.00,NULL,'PENDING'),(40,40,12000.00,NULL,'PENDING'),(41,41,50.00,NULL,'PENDING'),(42,42,5550.00,NULL,'PENDING');
+INSERT INTO `transaction` VALUES (60,62,5050.00,'2024-02-18','PROCESSED'),(61,63,15050.00,NULL,'PENDING'),(62,64,25050.00,'2024-02-17','PROCESSED'),(65,67,10000.00,'2024-02-18','PROCESSED'),(66,68,6200.00,NULL,'PENDING'),(67,69,25000.00,'2024-02-25','PROCESSED'),(69,71,4950.00,NULL,'PENDING'),(70,72,25000.00,'2024-02-25','PROCESSED'),(71,73,32400.00,'2024-02-26','PROCESSED');
 /*!40000 ALTER TABLE `transaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,7 +148,7 @@ DROP TABLE IF EXISTS `unitsrate`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `unitsrate` (
   `sno` int(1) NOT NULL,
-  `rate` int(10) NOT NULL,
+  `rate` decimal(10,2) NOT NULL,
   PRIMARY KEY (`sno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -157,7 +159,7 @@ CREATE TABLE `unitsrate` (
 
 LOCK TABLES `unitsrate` WRITE;
 /*!40000 ALTER TABLE `unitsrate` DISABLE KEYS */;
-INSERT INTO `unitsrate` VALUES (1,50);
+INSERT INTO `unitsrate` VALUES (1,50.00);
 /*!40000 ALTER TABLE `unitsrate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -175,8 +177,10 @@ CREATE TABLE `user` (
   `phone` varchar(255) NOT NULL,
   `pass` varchar(20) NOT NULL,
   `address` varchar(100) NOT NULL,
+  `verify` int(1) unsigned zerofill DEFAULT NULL,
+  `create_date` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -185,18 +189,10 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (19,'Zaw Khant Win','zawkhantwin134@gmail.com','09677034331','1342004','UCSM'),(20,'Test','test@gmail.com','09454942634','test','UCSM'),(21,'Test','test1@gmail.com','09400478331','aa','UCSM');
+INSERT INTO `user` VALUES (35,'Zaw Khant Win','zawkhantwin134@gmail.com','09677034331','zaw','UCSM',1,NULL),(92,'Soe Thurein','reinblahblah@gmail.com','09123456789','123456soe','wuntho',1,NULL),(109,'Aung Aung','aungaung699901@gmail.com','09123456781','12345678','ucsm',1,NULL),(122,'Dee D','jockydeedeekit80@gmail.com','09400478343','zawkhantwin','ucsm',NULL,'2024-02-26'),(123,'Dee D','jockydeedeekit80@gmail.com','09400478343','zawkhantwin','ucsm',1,'2024-02-26'),(124,'zaw','zawkhantwin132004@gmail.com','09757085072','mmmmmmmm','UCSM',NULL,'2024-02-27');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
-
-
---
--- Dumping events for database 'ebillsystem'
---
--- STORED PROCEDURE TO MULTIPLY UNITS * RATE TO GET AMOUNT
-
-delimiter //
-DROP PROCEDURE IF EXISTS `unitstoamount`;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 CREATE PROCEDURE unitstoamount( IN units INT(14) , OUT result INT(14))
 BEGIN
@@ -235,12 +231,6 @@ END
 delimiter ;
 
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
@@ -249,4 +239,4 @@ delimiter ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-12 15:20:30
+-- Dump completed on 2024-02-26 14:46:28

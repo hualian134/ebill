@@ -50,7 +50,7 @@
                             
                         ?>
                         <!-- STATISTICS -->
-                        <h1 style="padding-left:30px;" class="text-muted text-centered">Stats</h1>
+                        <h1 style="padding-left:30px;" class="text-muted text-centered">Status</h1>
                         <div class="row" style="margin-top: 20px;">
 
                             <?php 

@@ -66,7 +66,8 @@ if(isset($_POST["reg_submit"])) {
                 if(strlen($password)<8 OR strlen($password)>20){
                     array_push($error,"Password length must be  between 8 to 20");
                 }
-                if(!preg_match("/^\d{11}$/",$phone)){
+                //if(!preg_match("/^\d{11}$/",$phone)){
+                if(preg_match("/^[0-9]{2}[0-9]{9}$/",$phone)){
                     array_push($error,"11 digit phone number is allowed");
                 }
                 
@@ -80,7 +81,7 @@ if(isset($_POST["reg_submit"])) {
                 
                 if (empty($error)){
                     $_SESSION['email']=$email;
-                    $date=date("Y/M/D");
+                   // $date=date("Y/M/D");
                     $query = "INSERT INTO user (`name`,`email`,`phone`,`pass`,`address`)
                     VALUES(?,?,?,?,?)";
                     $stmt = mysqli_prepare($con, $query);

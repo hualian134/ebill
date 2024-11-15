@@ -104,7 +104,7 @@
                                 <!-- create a clickable list of USERS leading to a modal form to fill up units -->
                                 
                                     <?php
-                                    $sql = "SELECT curdate1()";
+                                    $sql = "SELECT curdate()";
                                     $result = mysqli_query($con,$sql);
                                     if($result === FALSE) {
                                         echo "FAILED";

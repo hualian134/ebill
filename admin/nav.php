@@ -6,6 +6,7 @@
     // }
     // else
     //     $user = "noname error";
+
     
 ?>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">

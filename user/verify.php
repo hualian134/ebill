@@ -45,6 +45,11 @@ h1{
         <h1>Forget Password?</h1>
         
     <?php 
+    if(isset($_SESSION['msg'])){
+        $msg= $_SESSION['msg'];
+        echo "<div class='alert alert-success'>$msg</div>";
+        //unset($_SESSION['fail']);
+    }
         if(isset($_SESSION['fail'])){
         $fail= $_SESSION['fail'];
         echo "<div class='alert alert-danger'>$fail</div>";

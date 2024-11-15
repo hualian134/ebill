@@ -20,6 +20,7 @@ include("signup.php");
        
 if(isset($_POST["get"]) && !empty($email)){
     try{
+        
         $ver=rand(100000, 999999);
         $_SESSION['varify_code']=$ver;
         $mail = new PHPMailer(true);
@@ -47,15 +48,21 @@ if(isset($_POST["get"]) && !empty($email)){
 }
     
 if(isset($_POST['confirm'])){
+    $query1="DELETE FROM user WHERE verify!=1 and create_date<curdate();";
+    $con->query($query1);
     $verify=$_POST['verify'];
         $set=1;
+       
         if ($verify==$_SESSION['varify_code']){
             $sql="UPDATE user SET verify=$set where name='$name' AND email='$email' and phone='$phone' AND pass='$password' AND address='$address'
                     ORDER BY id desc LIMIT 1";
                     if($con->query($sql)){
-                        $query="DELETE FROM user WHERE email='$email' AND verify!=1;";
-                        $query.="DELETE FROM user WHERE verify!=1 and create_date<curdate()";
-
+                        
+                          $query="DELETE FROM user WHERE email='$email' AND verify!=1;";
+                          $query.="DELETE FROM user where verify=0 and create_date<curdate()";
+    
+                        
+                    
                         if($con->multi_query($query)){
                          $_SESSION['success']='<script>
                          alertify.set("notifier","position", "top-center");
@@ -117,12 +124,16 @@ let popup=window.open(url, 'popUpWindow', 'height=' + height + ', width=' + widt
         <center>
                     <div class="row mx-auto g-3 " >
                        <div class="group">
-                            
-                            <a href="index.php" class="btn btn-primary btn-lg" >Back</a>
-                            
+                        <div class="control">
+                           <div class="backBtn">
+                            <a href="index.php"   class="btn btn-primary btn-lg" >Back</a>
+                           </div>
+                           <div class="confirmBtn">
                             <input type="submit" class="btn btn-success btn-lg" value="Comfirm" name="confirm"> 
+</div>
+</div>
                             <div>
-                                <div>
+                                <div class="subBox">
                                     <input type="submit" class="btn btn-warning" value="Send verification code" name="get">
                                 </div>
                             </div>
